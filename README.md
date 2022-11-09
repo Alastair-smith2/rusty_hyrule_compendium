@@ -51,11 +51,11 @@ Furthermore it's possbile to request all of the above by category but pattern ma
 ```rust
 let result = client.category(CompendiumCategory::Treasure)?;
 match result {
-            CategoryResult::Treasure(treasure) => {
-                // Do something with the Vec<TreasureEntry>
-            }
-            _ => panic!("Unexpected result while search for treasure category"),
-        }
+    CategoryResult::Treasure(treasure) => {
+        // Do something with the Vec<TreasureEntry>
+    }
+    _ => panic!("Unexpected result while search for treasure category"),
+}
 ```
 
 ### All entries in compendium
