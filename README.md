@@ -11,7 +11,7 @@ A library for consuming the [Hyrule Compendium API](https://gadhagod.github.io/H
 
 This library exposes a client that can be used to request information from the API
 
-### Example
+### Examples
 
 **Currently you'll need to clone this repository and build it yourself**
 
@@ -23,6 +23,8 @@ rusty_hyrule_compendium = "0.1.0"
 ```
 
 To use this library, you'll need to instantiate the Compendium client. `CompendiumClient::default();` preconfigures the underlying HTTP client and API url with sensible values.
+
+### Singular entry by identifer
 
 ```rust
 use rusty_hyrule_compendium::blocking::CompendiumClient;
@@ -42,6 +44,8 @@ Each of the resources (see below for comprehensive list) have a [struct](https:/
 
 [Here](https://gadhagod.github.io/Hyrule-Compendium-API/#/?id=concept) contains the raw JSON response for the example
 
+### All entries for a given category
+
 Furthermore it's possbile to request all of the above by category but pattern matching is required to get the entries.
 
 ```rust
@@ -54,6 +58,8 @@ match result {
         }
 ```
 
+### All entries in compendium
+
 It's also possible to get all entries by the `.all_entries()` method
 
 E.g.
@@ -64,12 +70,10 @@ let all_entries = client.all_entries()?;
 let food_creatures = all_entries.creatures().food();
 ```
 
-### Available resources
+## Available resources from the API
 
 - Monsters (standard and master mode ones), `.monster()`
 - Creatures `.creature()`
 - Equipment
 - Materials
 - Treasure
-
-These can be searched by name (e.g. `EntryIdentifier::Name("Moblin"))` or id (e.g. `EntryIdentifier::Id(1)`)
