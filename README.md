@@ -4,7 +4,7 @@ A library for consuming the [Hyrule Compendium API](https://gadhagod.github.io/H
 
 [![MIT licensed][mit-badge]][mit-url]
 
-[mit-url]: https://github.com/Alastair-Smith2/rusty_hyrule_compendium/LICENSE
+[mit-url]: https://github.com/Alastair-smith2/rusty_hyrule_compendium/LICENSE
 
 ## Overview
 
@@ -18,7 +18,7 @@ In future it's hoped that you'll be able to install as a crate below
 
 ```toml
 [dependencies]
-rusty_hyrule_compendium = 0.1.0
+rusty_hyrule_compendium = "0.1.0"
 ```
 
 E.g.
@@ -45,4 +45,6 @@ let image = monster.image();
 - Materials
 - Treasure
 
-These can be searched by name or id, or requested
+These can be searched by name or id.
+
+Furthermore it's possbile to request all of the above by category
