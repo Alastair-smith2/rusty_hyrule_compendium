@@ -4,6 +4,7 @@ A library for consuming the [Hyrule Compendium API](https://gadhagod.github.io/H
 
 [![MIT licensed][mit-badge]][mit-url]
 
+[mit-badge]: https://img.shields.io/badge/license-MIT-blue.svg
 [mit-url]: https://github.com/Alastair-smith2/rusty_hyrule_compendium/blob/main/LICENSE
 
 ## Overview
