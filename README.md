@@ -74,8 +74,8 @@ let food_creatures = all_entries.creatures().food();
 
 ## Available resources from the API
 
-- Monsters (standard and master mode ones), `.monster()`
-- Creatures `.creature()`
+- Monsters (standard and master mode ones)
+- Creatures
 - Equipment
 - Materials
 - Treasure
