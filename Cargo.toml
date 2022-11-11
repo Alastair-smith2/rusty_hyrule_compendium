@@ -6,7 +6,7 @@ repository = "https://github.com/Alastair-smith2/rusty_hyrule_compendium"
 edition = "2021"
 authors = ["Alastair Smith"]
 readme = "README.md"
-keywords = ["zelda"]
+keywords = ["zelda", "http", "api"]
 license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
