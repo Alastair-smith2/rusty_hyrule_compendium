@@ -1,6 +1,6 @@
 [package]
 name = "rusty_hyrule_compendium"
-version = "0.1.1"
+version = "0.1.2"
 description = "A rust library for the Hyrule Compendium API"
 repository = "https://github.com/Alastair-smith2/rusty_hyrule_compendium"
 edition = "2021"

@@ -23,29 +23,45 @@ pub trait CompendiumSealed {}
 pub trait CompendiumApiClient: CompendiumSealed {
     /// Get an entry (see [EntryResponse](crate::domain::responses::EntryResponse) for exact types that can be returned) by [identifier](crate::domain::inputs::EntryIdentifier)
     /// ```rust
-    /// use rusty_hyrule_compendium::blocking::CompendiumClient;
+    /// use rusty_hyrule_compendium::blocking::{CompendiumApiClient, CompendiumClient};
     /// use rusty_hyrule_compendium::domain::inputs::EntryIdentifier;
+    /// use rusty_hyrule_compendium::domain::responses::EntryResponse;
+    /// use rusty_hyrule_compendium::Result;
     ///
-    /// let client = CompendiumClient::default();
-    /// let entry = client.entry(EntryIdentifier::Id(1))?;
-    /// match entry {
-    ///   EntryResponse::Creature(creature) => {
-    ///        // "Horse"
-    ///        let name = creature.name();
-    ///    }
-    ///    _ => { /* Handle other EntryResponse types as desired */}
+    /// fn main() -> Result<()> {
+    ///     // Preconfigured client using v2 of the API
+    ///     let client = CompendiumClient::default();
+    ///     // Requests can fail for a number of reasons, see the error module for available errors
+    ///     let entry = client.entry(EntryIdentifier::Id(1))?;
+    ///     // "white-maned lynel"
+    ///      match entry {
+    ///         EntryResponse::Creature(creature) => {
+    ///           // "Horse"
+    ///          let name = creature.name();
+    ///          }
+    ///          _ => { /* Handle other EntryResponse types as desired */}
+    ///     }
+    ///     Ok(())
     /// }
     /// ```
     fn entry(&self, identifier: EntryIdentifier) -> Result<EntryResponse>;
     /// Get a [monster entry](crate::domain::models::MonsterEntry) by [identifier](crate::domain::inputs::EntryIdentifier)
     /// ```rust
-    /// use rusty_hyrule_compendium::blocking::CompendiumClient;
+    /// use rusty_hyrule_compendium::blocking::{CompendiumApiClient, CompendiumClient};
     /// use rusty_hyrule_compendium::domain::inputs::EntryIdentifier;
-    /// use rusty_hyrule_compendium::domain::responses::EntryResponse;
-    ///
-    /// let client = CompendiumClient::default();
-    /// // A monster entry represented the "white-maned lynel"
-    /// let monster = client.monster(EntryIdentifier::Id(123))?;
+    /// use rusty_hyrule_compendium::Result;
+
+    /// fn main() -> Result<()> {
+    ///     // Preconfigured client using v2 of the API
+    ///     let client = CompendiumClient::default();
+    ///     // Requests can fail for a number of reasons, see the error module for available errors
+    ///     let monster_entry = client.monster(EntryIdentifier::Id(123))?;
+    ///     // "white-maned lynel"
+    ///     let monster_name = monster_entry.name();
+    ///     // "https://botw-compendium.herokuapp.com/api/v2/entry/white-maned_lynel/image"
+    ///     let monster_image = monster_entry.image();
+    ///     Ok(())
+    /// }
     /// ```
     fn monster(&self, identifier: EntryIdentifier) -> Result<MonsterEntry>;
     /// Get specifically a [monster entry](crate::domain::models::MonsterEntry) that exists only in master mode by [identifier](crate::domain::inputs::EntryIdentifier)
@@ -60,28 +76,40 @@ pub trait CompendiumApiClient: CompendiumSealed {
     fn equipment(&self, identifier: EntryIdentifier) -> Result<EquipmentEntry>;
     /// Get all entries for a given a category
     /// ```rust
-    /// use rusty_hyrule_compendium::blocking::CompendiumClient;
-    ///
-    /// let client = CompendiumClient::default();
-    /// // An enum of possible results
-    /// let result = client.category(CompendiumCategory::Monster)?;
-    /// match result {
-    ///     CategoryResult::Monsters(monsters) => {
-    ///         // monsters
+    /// use rusty_hyrule_compendium::blocking::{CompendiumApiClient, CompendiumClient};
+    /// use rusty_hyrule_compendium::domain::inputs::CompendiumCategory;
+    /// use rusty_hyrule_compendium::domain::responses::CategoryResult;
+    /// use rusty_hyrule_compendium::Result;
+
+    /// fn main() -> Result<()> {
+    ///     // Preconfigured client using v2 of the API
+    ///     let client = CompendiumClient::default();
+    ///     let result = client.category(CompendiumCategory::Monster)?;
+    ///     match result {
+    ///         CategoryResult::Monsters(monsters) => {
+    ///             // monsters
+    ///         }
+    ///         _ => { /* Return some form of error, unexpected scenario */}
     ///     }
-    ///     _ => { /* Return some form of error, unexpected scenario */}
+    ///     Ok(())
     /// }
     /// ```
     fn category(&self, category: CompendiumCategory) -> Result<CategoryResult>;
     /// Get all entries in the compendium (excluding master mode)
     /// ```rust
-    /// use rusty_hyrule_compendium::blocking::CompendiumClient;
+    /// use rusty_hyrule_compendium::blocking::{CompendiumApiClient, CompendiumClient};
+    /// use rusty_hyrule_compendium::domain::inputs::CompendiumCategory;
+    /// use rusty_hyrule_compendium::domain::responses::CategoryResult;
+    /// use rusty_hyrule_compendium::Result;
     ///
-    /// let client = CompendiumClient::default();
-    /// // All the entries from the compendium
-    /// let all_entries = client.all_entries()?;
-    /// // &Vec<CreatureEntry> that are food specific
-    /// let food_creatures = all_entries.creatures().food();
+    /// fn main() -> Result<()> {
+    ///     // Preconfigured client using v2 of the API
+    ///     let client = CompendiumClient::default();
+    ///     let all_entries = client.all_entries()?;
+    ///     /// // &Vec<CreatureEntry> that are food specific
+    ///     let food_creatures = all_entries.creatures().food();
+    ///     Ok(())
+    /// }
     /// ```
     fn all_entries(&self) -> Result<AllStandardEntries>;
     /// Get all [master mode entries](crate::domain::models::MonsterEntry) (which are only monsters) in the compendium
