@@ -17,7 +17,7 @@ Start by adding the following snippet to your `Cargo.toml`
 
 ```toml
 [dependencies]
-rusty_hyrule_compendium = "0.1.0"
+rusty_hyrule_compendium = "0.1.3"
 ```
 
 To use this library, you'll need to instantiate the Compendium client. `CompendiumClient::default();` preconfigures the underlying HTTP client and API url with sensible values.
@@ -51,12 +51,22 @@ Each of the resources (see below for comprehensive list) have a [struct](https:/
 Furthermore it's possbile to request all of the above by category but pattern matching is required to get the entries.
 
 ```rust
-let result = client.category(CompendiumCategory::Treasure)?;
-match result {
-    CategoryResult::Treasure(treasure) => {
-        // Do something with the Vec<TreasureEntry>
+use rusty_hyrule_compendium::blocking::{CompendiumApiClient, CompendiumClient};
+use rusty_hyrule_compendium::domain::inputs::CompendiumCategory;
+use rusty_hyrule_compendium::domain::responses::CategoryResult;
+use rusty_hyrule_compendium::Result;
+
+fn main() -> Result<()> {
+    // Preconfigured client using v2 of the API
+    let client = CompendiumClient::default();
+    let result = client.category(CompendiumCategory::Treasure)?;
+    match result {
+        CategoryResult::Treasure(treasure) => {
+            // Do something with the Vec<TreasureEntry>
+        }
+        _ => { /* Return some form of error, unexpected scenario */}
     }
-    _ => panic!("Unexpected result while search for treasure category"),
+    Ok(())
 }
 ```
 
@@ -67,9 +77,17 @@ It's also possible to get all entries by the `.all_entries()` method
 E.g.
 
 ```rust
-let all_entries = client.all_entries()?;
-// Get all creature entries that are food specific, &Vec<CreatureEntry> type
-let food_creatures = all_entries.creatures().food();
+use rusty_hyrule_compendium::blocking::{CompendiumApiClient, CompendiumClient};
+use rusty_hyrule_compendium::Result;
+
+fn main() -> Result<()> {
+    // Preconfigured client using v2 of the API
+    let client = CompendiumClient::default();
+    let all_entries = client.all_entries()?;
+    // Get all creature entries that are food specific, &Vec<CreatureEntry> type
+    let food_creatures = all_entries.creatures().food();
+    Ok(())
+}
 ```
 
 ## Available resources from the API
